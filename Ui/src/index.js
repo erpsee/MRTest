@@ -70,22 +70,20 @@ function init() {
 
 	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-	renderer = new THREE.WebGLRenderer( { antialias: true } );
+	renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.outputEncoding = THREE.sRGBEncoding;
 	renderer.xr.enabled = true;
 	
 	const vrButton = VRButton.createButton(renderer);
-	vrButton.style.position = 'absolute';
 	vrButton.style.bottom = '70px';
-	vrButton.style.zIndex = '10'; // Damit der Button oben angezeigt wird
+	vrButton.style.zIndex = '10'; 
 	document.body.appendChild(vrButton);
 
 // AR-Button hinzufügen
 	const arButton = ARButton.createButton(renderer);
-	arButton.style.position = 'absolute';
-	arButton.style.zIndex = '10'; // Damit der Button oben angezeigt wird
+	arButton.style.zIndex = '10';
 	document.body.appendChild(arButton);
 
 	document.body.appendChild( renderer.domElement );
@@ -112,6 +110,17 @@ function init() {
 
 	scene.add( room );
 	objsToTest.push( roomMesh );
+
+
+	arButton.addEventListener('click', () => {
+		console.log('AR-Button gedrückt');
+		
+		if (scene.children.includes(room)) {
+		  scene.remove(room);
+		  scene.background = null;
+		  console.log('room wurde entfernt');
+		}
+	  });
 
 	//////////
 	// Light
