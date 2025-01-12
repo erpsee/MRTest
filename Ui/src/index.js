@@ -12,6 +12,7 @@ import ShadowedLight from '../utils/ShadowedLight.js';
 
 import FontJSON from '../dist/assets/Roboto-msdf.json';
 import FontImage from '../dist/assets/Roboto-msdf.png';
+import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
 
 let scene, camera, renderer, controls, vrControl;
 let meshContainer, meshes, currentMesh;
@@ -74,11 +75,23 @@ function init() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.outputEncoding = THREE.sRGBEncoding;
 	renderer.xr.enabled = true;
-	document.body.appendChild( VRButton.createButton( renderer ) );
+	
+	const vrButton = VRButton.createButton(renderer);
+	vrButton.style.position = 'absolute';
+	vrButton.style.bottom = '70px';
+	vrButton.style.zIndex = '10'; // Damit der Button oben angezeigt wird
+	document.body.appendChild(vrButton);
+
+// AR-Button hinzufügen
+	const arButton = ARButton.createButton(renderer);
+	arButton.style.position = 'absolute';
+	arButton.style.zIndex = '10'; // Damit der Button oben angezeigt wird
+	document.body.appendChild(arButton);
+
 	document.body.appendChild( renderer.domElement );
 
+	
 	// Orbit controls for no-vr
-
 	controls = new OrbitControls( camera, renderer.domElement );
 	camera.position.set( 0, 1.6, 0 );
 	controls.target = new THREE.Vector3( 0, 1, -1.8 );
