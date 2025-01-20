@@ -142,14 +142,26 @@ function init() {
 
 	vrControl = VRControl( renderer, camera, scene );
 
-	scene.add( vrControl.controllerGrips[ 0 ], vrControl.controllers[ 0 ] );
+	scene.add( vrControl.controllerGrips, vrControl.controllers );
 
-	vrControl.controllers[ 0 ].addEventListener( 'selectstart', () => {
+	vrControl.controllers[0].addEventListener( 'selectstart', () => {
 
 		selectState = true;
 
 	} );
-	vrControl.controllers[ 0 ].addEventListener( 'selectend', () => {
+
+	vrControl.controllers[0].addEventListener( 'selectend', () => {
+
+		selectState = false;
+
+	} );
+
+	vrControl.controllers[1].addEventListener( 'selectstart', () => {
+
+		selectState = true;
+
+	} );
+	vrControl.controllers[1].addEventListener( 'selectend', () => {
 
 		selectState = false;
 
@@ -477,18 +489,7 @@ function updateButtons() {
 	} );
 
 }
-function zeigeIframe() {
-	const iframe = document.createElement('iframe');
-    iframe.src = 'car_test.html'; // A-Frame-Szene
-    iframe.width = '800';
-    iframe.height = '600';
-    iframe.style.position = 'absolute';
-    iframe.style.top = '50%';
-    iframe.style.left = '50%';
-    iframe.style.transform = 'translate(-50%, -50%)';
-    iframe.style.border = 'none';
-    document.body.appendChild(iframe);
-}
+
 
 function zeigeIframeAlt() {
 	window.location.href = '../src/car_test.html';
