@@ -120,7 +120,7 @@ function init() {
 		  scene.background = null;
 		  console.log('room wurde entfernt');
 		}
-	  });
+	  })
 
 	//////////
 	// Light
@@ -140,28 +140,17 @@ function init() {
 	// Controllers
 	////////////////
 
+	
 	vrControl = VRControl( renderer, camera, scene );
 
-	scene.add( vrControl.controllerGrips, vrControl.controllers );
+	scene.add( vrControl.controllerGrips[ 0 ], vrControl.controllers[ 0 ] );
 
-	vrControl.controllers[0].addEventListener( 'selectstart', () => {
-
-		selectState = true;
-
-	} );
-
-	vrControl.controllers[0].addEventListener( 'selectend', () => {
-
-		selectState = false;
-
-	} );
-
-	vrControl.controllers[1].addEventListener( 'selectstart', () => {
+	vrControl.controllers[ 0 ].addEventListener( 'selectstart', () => {
 
 		selectState = true;
 
 	} );
-	vrControl.controllers[1].addEventListener( 'selectend', () => {
+	vrControl.controllers[ 0 ].addEventListener( 'selectend', () => {
 
 		selectState = false;
 
@@ -305,8 +294,8 @@ function makePanel() {
 		textAlign: 'center',
 		fontSize: 0.05,
 		padding: 0.05
-	}))*/
-	// BUTTONS
+	}))
+	 BUTTONS*/
 
 	// We start by creating objects containing options that we will use with the two buttons,
 	// in order to write less code.

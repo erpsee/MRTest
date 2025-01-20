@@ -5,7 +5,7 @@
 import * as THREE from 'three';
 import { XRControllerModelFactory } from 'three/examples/jsm/webxr/XRControllerModelFactory.js';
 
-export default async function VRControl( renderer ) {
+export default function VRControl( renderer ) {
 
 	const controllers = [];
 	const controllerGrips = [];
@@ -206,7 +206,7 @@ function generateRayTexture() {
 
 // Generate the texture of the point helper sprite
 
-async function generatePointerTexture() {
+function generatePointerTexture() {
 
 	const canvas = document.createElement( 'canvas' );
 	canvas.width = 64;
