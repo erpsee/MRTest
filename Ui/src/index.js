@@ -57,7 +57,7 @@ window.addEventListener( 'touchend', () => {
 	mouse.y = null;
 } );
 
-//
+const mode ='vr'
 
 function init() {
 
@@ -111,7 +111,7 @@ function init() {
 	scene.add( room );
 	objsToTest.push( roomMesh );
 
-	const mode ='vr' 
+	 
 	arButton.addEventListener('click', () => {
 		console.log('AR-Button gedrückt');
 		mode = 'ar';
