@@ -17,7 +17,7 @@
   <script src="https://unpkg.com/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
   <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
 
-
+  
 
   <script>
     // Define a few custom components useful for AR mode. While these are somewhat reusable,
@@ -73,6 +73,24 @@
 </head>
 
 <body>
+  <script>  
+  
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get("mode");
+
+    document.addEventListener("DOMContentLoaded", () => {
+      
+
+      if (mode === "ar") {
+        this.el.sceneEl="ar-mode";
+      } else if (mode === "vr") {
+        this.el.sceneEl ="vr-mode";
+      } else {
+        console.warn("Unknown mode in url params: " + mode+ ", defaulting to vr");
+      }
+    });
+  </script>
+
   <a-scene device-orientation-permission-ui="enabled: false"
     webxr="requiredFeatures:hit-test,local-floor;referenceSpaceType:local-floor">
     <a-assets timeout="30000">
@@ -145,24 +163,7 @@
     document.getElementById('btn_tenth').onclick = setSize.bind(this, 0.1);
 
   </script>
-  <script>
-    
-    const params = new URLSearchParams(window.location.search);
-    const mode = params.get("mode");
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const sceneEl = document.querySelector("a-scene");
-
-      if (mode === "ar") {
-        sceneEl.setAttribute("ar-mode", "");
-        sceneEl.setAttribute("ar-hit-test-simple", "");
-      } else if (mode === "vr") {
-        sceneEl.setAttribute("vr-mode-ui", "");
-      } else {
-        console.warn("Unknown mode in url params: " + mode+ ", defaulting to vr");
-      }
-    });
-  </script>
+  
   <script>
     <!-- https://github.com/stspanho/aframe-hit-test/blob/master/index.html -->
     AFRAME.registerComponent("ar-hit-test-simple", {
