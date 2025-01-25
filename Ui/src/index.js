@@ -116,7 +116,7 @@ function init() {
 	 
 	arButton.addEventListener('click', () => {
 		console.log('AR-Button gedrückt');
-		mode = 'ar';
+		mode = "ar";
 		
 		if (scene.children.includes(room)) {
 		  scene.remove(room);
@@ -486,7 +486,11 @@ function updateButtons() {
 
 function zeigeIframeAlt() {
 	console.log('ar');
-	window.location.href = "../src/car_test.html?mode=ar";
+	
+	if(mode === "ar")
+		window.location.href = "https://erpsee.github.io/MRTest/Ui/src/car_test.html?mode=ar";
+	else
+		window.location.href = "https://erpsee.github.io/MRTest/Ui/src/car_test.html";
 }
 //
 
