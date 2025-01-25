@@ -13,7 +13,7 @@ import ShadowedLight from '../utils/ShadowedLight.js';
 import FontJSON from '../dist/assets/Roboto-msdf.json';
 import FontImage from '../dist/assets/Roboto-msdf.png';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
-import { string } from 'three/tsl';
+
 
 let scene, camera, renderer, controls, vrControl;
 let meshContainer, meshes, currentMesh;
@@ -490,7 +490,7 @@ function zeigeIframeAlt() {
 	if(mode === "ar")
 		window.location.href = "https://erpsee.github.io/MRTest/Ui/src/car_test.html?mode=ar";
 	else
-		window.location.href = "https://erpsee.github.io/MRTest/Ui/src/car_test.html";
+		window.location.href = "https://erpsee.github.io/MRTest/Ui/src/car_test.html?mode=ar";
 }
 //
 
