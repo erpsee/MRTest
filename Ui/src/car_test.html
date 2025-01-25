@@ -74,7 +74,10 @@
   <a-scene device-orientation-permission-ui="enabled: false"
     webxr="requiredFeatures:hit-test,local-floor;referenceSpaceType:local-floor">
     <a-assets timeout="30000">
-      <img id="racetrack" src="canvas.png">
+      <img id="racetrack_large" src="Large.png">
+      <img id="racetrack_middle" src="Middle.png">
+      <img id="racetrack_small" src="Small.png">
+
     </a-assets>
     <a-camera position="0 1.2 6"></a-camera>
     <a-ring id="reticle" ar-hit-test-simple rotation="-90 0 0" radius-inner="0.02" radius-outer="0.03">
@@ -86,10 +89,12 @@
     <!-- Environment for 2D and VR viewing. It's auto-hidden in AR mode. -->
     <a-entity environment="lighting: none; shadow: none; lightPosition: 0 2.15 0" hide-in-ar-mode></a-entity>
     </a-entity>
-    <a-entity id="container" position="0 0.01 0">
-      <a-plane id="RT" src="#racetrack" height="4" width="4" position="0 0.01 0" rotation="-90 0 0"></a-plane>
-      <a-entity id="car" gltf-model="url(bmw-326/cartest.glb)" position="0 0.03 0" rotation="0 90 0"
-        scale="0.0005 0.0005 0.0005"></a-entity>
+    <a-entity id="container" position="0 0.01 0" scale="0.5 0.5 0.5">
+      <a-plane id="racetrack_l" src="#racetrack_large" height="4" width="4" position="0 0.01 0" rotation="-90 0 0"visible="true" shadow="receive: false"></a-plane>
+      <a-plane id="racetrack_m" src="#racetrack_middle" height="4" width="4" position="0 0.01 0" rotation="-90 0 0" visible="false" shadow="receive: false"></a-plane>
+      <a-plane id="racetrack_s" src="#racetrack_small" height="4" width="4" position="0 0.01 0" rotation="-90 0 0"visible="false"shadow="receive: false"></a-plane>
+      <a-entity id="car" gltf-model="url(bmw-326/cartest.glb)" position="-1 0.03 1.7" rotation="0 90 0"
+        scale="0.0005 0.0005 0.0005" shadow="receive: false"></a-entity>
     </a-entity>
     <a-entity light="type: ambient; intensity: 0.5;"></a-entity>
 
@@ -102,7 +107,7 @@
                       shadowCameraLeft: -7;
                       shadowCameraRight: 5;
                       shadowCameraBottom: -5;
-                      shadowCameraTop: 5;" id="light" target="model" position="-5 3 1.5"></a-light>
+                      shadowCameraTop: 5;" id="light" target="model" position="-5 3 1.5" intensity="2"></a-light>
 
     <!-- This shadow-receiving plane is only visible in AR mode. -->
     <a-plane height="15" width="15" position="0 0 0" rotation="-90 0 0" shadow="receive: true" ar-shadows="opacity: 0.3"
@@ -125,16 +130,11 @@
       Android or an iOS device using
       <a href="https://launch.variant3d.com/">Variant Launch</a>
     </p>
-
-    <p>
-      Paste this Glitch's preview URL into your Variant Launch Code generator
-      to get a url that works on Android or iOS.
-    </p>
   </div>
   <script>
     function setSize(scale) {
       document
-        .getElementById("model")
+        .getElementById("container")
         .setAttribute("scale", { x: scale, y: scale, z: scale });
     }
     document.getElementById("btn_full").onclick = setSize.bind(this, 1);
@@ -208,10 +208,10 @@
         this.el.addEventListener('axismove', this.brake.bind(this));
         this.car = document.getElementById('car');
         this.speed = 0;
-        this.maxSpeed = 0.05;
+        this.maxSpeed = 0.006;
         this.acceleration = 0.005;
         this.brakingForce = 0.02;
-        this.rotationSpeed = 1;
+        this.rotationSpeed = 2;
       },
       handleThumbstick: function (evt) {
         const hand = evt.target.getAttribute('oculus-touch-controls').hand;
