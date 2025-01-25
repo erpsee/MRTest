@@ -200,7 +200,7 @@ function init() {
 	// Panel
 	//////////
 
-	makePanel(mode);
+	makePanel();
 
 	//
 
@@ -224,7 +224,7 @@ function showMesh( id ) {
 // UI contruction
 ///////////////////
 
-function makePanel(mode) {
+function makePanel() {
 
 	// Container block, in which we put the two buttons.
 	// We don't define width and height, it will be set automatically from the children's dimensions
@@ -365,7 +365,7 @@ function makePanel(mode) {
 		attributes: selectedAttributes,
 		onSet: () => {
 
-			zeigeIframeAlt(mode);
+			zeigeIframeAlt();
 
 		}
 	} );
@@ -484,7 +484,7 @@ function updateButtons() {
 }
 
 
-function zeigeIframeAlt(mode) {
+function zeigeIframeAlt() {
 	console.log('ar');
 	
 	if(mode === "ar")
