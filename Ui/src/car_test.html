@@ -69,7 +69,7 @@
 </head>
 
 <body>
-  <a-scene webxr="requiredFeatures:hit-test,local-floor;referenceSpaceType:local-floor">
+  <a-scene vr-mode-ui="enabled: true"  webxr="requiredFeatures:hit-test,local-floor;referenceSpaceType:local-floor">
     <a-assets timeout="30000">
       <img id="racetrack_large" src="Large.png">
       <img id="racetrack_middle" src="Middle.png">
@@ -109,6 +109,20 @@
     <!-- This shadow-receiving plane is only visible in AR mode. -->
     <a-plane height="15" width="15" position="0 0 0" rotation="-90 0 0" shadow="receive: true" ar-shadows="opacity: 0.3"
       visible="false"></a-plane>
+      <script>  
+        document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const mode = params.get("mode");
+      
+        if (mode === "vr") {
+          document.querySelector("a-scene").enterVR();
+        } else if (mode === "ar") {
+          document.querySelector("a-scene").enterAR();
+        } else {
+          console.warn("Unknown mode in URL params: " + mode + ", defaulting to normal view.");
+        }
+      });
+        </script>
   </a-scene>
 
   <div id="text">
@@ -139,20 +153,6 @@
     document.getElementById("btn_quarter").onclick = setSize.bind(this, 0.25);
     document.getElementById('btn_tenth').onclick = setSize.bind(this, 0.1);
 
-  </script>
-  <script>  
-  document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  const mode = params.get("mode");
-
-  if (mode === "vr") {
-    document.querySelector("a-scene").enterVR();
-  } else if (mode === "ar") {
-    document.querySelector("a-scene").enterAR();
-  } else {
-    console.warn("Unknown mode in URL params: " + mode + ", defaulting to normal view.");
-  }
-});
   </script>
   
   <script>
