@@ -19,6 +19,7 @@ let scene, camera, renderer, controls, vrControl;
 let meshContainer, meshes, currentMesh;
 const objsToTest = [];
 
+let mode = "vr";
 
 window.addEventListener( 'load', init );
 window.addEventListener( 'resize', onWindowResize );
@@ -90,7 +91,6 @@ function init() {
 
 	document.body.appendChild( renderer.domElement );
 
-	const mode = 'vr';
 	// Orbit controls for no-vr
 	controls = new OrbitControls( camera, renderer.domElement );
 	camera.position.set( 0, 1.6, 0 );
