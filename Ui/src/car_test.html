@@ -73,24 +73,6 @@
 </head>
 
 <body>
-  <script>  
-  
-    const params = new URLSearchParams(window.location.search);
-    const mode = params.get("mode");
-
-    document.addEventListener("DOMContentLoaded", () => {
-      
-
-      if (mode === "ar") {
-        this.el.sceneEl="ar-mode";
-      } else if (mode === "vr") {
-        this.el.sceneEl ="vr-mode";
-      } else {
-        console.warn("Unknown mode in url params: " + mode+ ", defaulting to vr");
-      }
-    });
-  </script>
-
   <a-scene device-orientation-permission-ui="enabled: false"
     webxr="requiredFeatures:hit-test,local-floor;referenceSpaceType:local-floor">
     <a-assets timeout="30000">
@@ -162,6 +144,20 @@
     document.getElementById("btn_quarter").onclick = setSize.bind(this, 0.25);
     document.getElementById('btn_tenth').onclick = setSize.bind(this, 0.1);
 
+  </script>
+  <script>  
+  document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const mode = params.get("mode");
+
+  if (mode === "vr") {
+    document.querySelector("a-scene").enterVR();
+  } else if (mode === "ar") {
+    document.querySelector("a-scene").enterAR();
+  } else {
+    console.warn("Unknown mode in URL params: " + mode + ", defaulting to normal view.");
+  }
+});
   </script>
   
   <script>
