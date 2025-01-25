@@ -484,13 +484,10 @@ function updateButtons() {
 }
 
 
-function zeigeIframeAlt(mode) {
+function zeigeIframeAlt() {
 	console.log('ar');
-	const targetUrl = "../src/car_test.html";
-	const urlWithMode = `${targetUrl}?mode=${"ar"}`;
-	window.location.href = urlWithMode;
+	window.location.href = "../src/car_test.html?mode=ar";
 }
-
 //
 
 function raycast() {
