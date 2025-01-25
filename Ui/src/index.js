@@ -13,10 +13,12 @@ import ShadowedLight from '../utils/ShadowedLight.js';
 import FontJSON from '../dist/assets/Roboto-msdf.json';
 import FontImage from '../dist/assets/Roboto-msdf.png';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
+import { string } from 'three/tsl';
 
 let scene, camera, renderer, controls, vrControl;
 let meshContainer, meshes, currentMesh;
 const objsToTest = [];
+
 
 window.addEventListener( 'load', init );
 window.addEventListener( 'resize', onWindowResize );
@@ -57,7 +59,7 @@ window.addEventListener( 'touchend', () => {
 	mouse.y = null;
 } );
 
-const mode ='vr'
+//
 
 function init() {
 
@@ -88,7 +90,7 @@ function init() {
 
 	document.body.appendChild( renderer.domElement );
 
-	
+	const mode = 'vr';
 	// Orbit controls for no-vr
 	controls = new OrbitControls( camera, renderer.domElement );
 	camera.position.set( 0, 1.6, 0 );
@@ -482,11 +484,11 @@ function updateButtons() {
 }
 
 
-function zeigeIframeAlt() {
-	if (mode === 'ar')
-		window.location.href = '../src/car_test.html?mode=ar';
-	else
-		window.location.href = '../src/car_test.html?mode=vr';
+function zeigeIframeAlt(mode) {
+	console.log('ar');
+	const targetUrl = "../src/car_test.html";
+	const urlWithMode = `${targetUrl}?mode=${mode}`;
+	window.location.href = urlWithMode;
 }
 
 //
