@@ -487,7 +487,7 @@ function updateButtons() {
 function zeigeIframeAlt(mode) {
 	console.log('ar');
 	const targetUrl = "../src/car_test.html";
-	const urlWithMode = `${targetUrl}?mode=${ar}`;
+	const urlWithMode = `${targetUrl}?mode=${'ar'}`;
 	window.location.href = urlWithMode;
 }
 
