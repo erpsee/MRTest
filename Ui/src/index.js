@@ -81,7 +81,7 @@ function init() {
 	vrButton.style.zIndex = '10'; 
 	document.body.appendChild(vrButton);
 
-// AR-Button hinzufügen
+	// AR-Button hinzufügen
 	const arButton = ARButton.createButton(renderer);
 	arButton.style.zIndex = '10';
 	document.body.appendChild(arButton);
@@ -111,15 +111,17 @@ function init() {
 	scene.add( room );
 	objsToTest.push( roomMesh );
 
-
+	const mode ='vr' 
 	arButton.addEventListener('click', () => {
 		console.log('AR-Button gedrückt');
+		mode = 'ar';
 		
 		if (scene.children.includes(room)) {
 		  scene.remove(room);
 		  scene.background = null;
 		  console.log('room wurde entfernt');
 		}
+
 	  })
 
 	//////////
@@ -481,7 +483,10 @@ function updateButtons() {
 
 
 function zeigeIframeAlt() {
-	window.location.href = '../src/car_test.html';
+	if (mode === 'ar')
+		window.location.href = '../src/car_test.html?mode=ar';
+	else
+		window.location.href = '../src/car_test.html?mode=vr';
 }
 
 //
