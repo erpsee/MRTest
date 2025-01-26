@@ -477,10 +477,6 @@ function updateButtons() {
 function zeigeIframeAlt() {
     console.log('ar');
     let targetURL = "https://erpsee.github.io/MRTest/Ui/src/car_test.html";
-    
-    if (mode === "ar") {
-        targetURL += "?mode=ar";
-    }
     window.location.href = targetURL;
 }
 
