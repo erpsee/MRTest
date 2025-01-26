@@ -1,6 +1,3 @@
-
-/* Import everything we need from Three.js */
-
 import * as THREE from 'three';
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
 import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js';
@@ -34,6 +31,7 @@ const mouse = new THREE.Vector2();
 mouse.x = mouse.y = null;
 
 let selectState = false;
+let selectedObject = null;
 
 window.addEventListener('pointermove', (event) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -364,7 +362,7 @@ function makePanel() {
         state: 'selected',
         attributes: selectedAttributes,
         onSet: () => {
-
+            selectedObject = buttonNext;
             zeigeIframeAlt();
 
         }
@@ -378,7 +376,7 @@ function makePanel() {
         state: 'selected',
         attributes: selectedAttributes,
         onSet: () => {
-
+            selectedObject = buttonPrevious
             currentMesh -= 1;
             if (currentMesh < 0) currentMesh = 2;
             showMesh(currentMesh);
@@ -451,35 +449,27 @@ function updateButtons() {
     }
 
     // Update targeted button state (if any)
-
-    if (intersect && intersect.object.isUI) {
-
+     if (intersect && intersect.object.isUI) {
         if (selectState) {
-
-            // Component.setState internally call component.set with the options you defined in component.setupState
             intersect.object.setState('selected');
-
         } else {
-
-            // Component.setState internally call component.set with the options you defined in component.setupState
             intersect.object.setState('hovered');
-
         }
-
+        selectedObject = intersect.object
     }
+
 
     // Update non-targeted buttons state
 
     objsToTest.forEach((obj) => {
 
-        if ((!intersect || obj !== intersect.object) && obj.isUI) {
+        if ( (!intersect || obj !== intersect.object) && obj.isUI ) {
 
             // Component.setState internally call component.set with the options you defined in component.setupState
-            obj.setState('idle');
-
+            obj.setState( 'idle' );
         }
 
-    });
+    } );
 
 }
 
