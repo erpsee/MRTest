@@ -101,31 +101,6 @@
       visible="false"></a-plane>
 
   </a-scene>
-
-  <!-- Nicht empfohlen: Automatischer Start (siehe Kommentare) -->
-  <script>
-    // Automatischer AR-Start beim Laden der Seite (nicht empfohlen)
-    window.addEventListener('load', async () => {
-      if (navigator.xr) {
-        try {
-          const session = await navigator.xr.requestSession('immersive-ar', {
-            optionalFeatures: ['local-floor', 'bounded-floor', 'dom-overlay'],
-             domOverlay: { root: document.body },
-          });
-          const sceneEl = document.querySelector('a-scene');
-          sceneEl.xrSession = session;
-          console.log("AR-Session erfolgreich gestartet.");
-          session.requestAnimationFrame(() => { // Anfrage für die erste Frame, dies kann aber auch nach hinten losgehen
-            console.log("Erster Frame der Sitzung angefordert, kann zu Problemen führen");
-          });
-        } catch (error) {
-          console.error("AR-Session konnte nicht gestartet werden:", error);
-        }
-      } else {
-        console.error("WebXR wird von diesem Gerät oder Browser nicht unterstützt.");
-      }
-    });
-  </script>
   <script>
     function setSize(scale) {
       document
@@ -251,7 +226,32 @@
     document.getElementById('rightController').setAttribute('car-controls', '');
 
   </script>
+    <script>
+      // Automatischer AR-Start beim Laden der Seite (nicht empfohlen)
+    window.addEventListener('load', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const mode = urlParams.get('mode');
 
+      if (mode === 'ar' && navigator.xr) {
+        try {
+          const session = await navigator.xr.requestSession('immersive-ar', {
+            optionalFeatures: ['local-floor', 'bounded-floor', 'dom-overlay'],
+             domOverlay: { root: document.body },
+          });
+          const sceneEl = document.querySelector('a-scene');
+          sceneEl.xrSession = session;
+          console.log("AR-Session erfolgreich gestartet.");
+          session.requestAnimationFrame(() => {
+            console.log("Erster Frame der Sitzung angefordert.");
+          });
+        } catch (error) {
+          console.error("AR-Session konnte nicht gestartet werden:", error);
+        }
+      } else {
+          console.log("WebXR wird nicht oder AR-Modus wurde nicht angefordert.");
+      }
+    });
+    </script>
 </body>
 
 </html>
