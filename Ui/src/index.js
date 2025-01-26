@@ -1,10 +1,12 @@
 import * as THREE from 'three';
 
+
 import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import ThreeMeshUI from 'three-mesh-ui';
 
+import VRControl from '../utils/VRControl.js';
 import ShadowedLight from '../utils/ShadowedLight.js';
 import FontJSON from '../dist/assets/Roboto-msdf.json';
 import FontImage from '../dist/assets/Roboto-msdf.png';
@@ -12,7 +14,7 @@ import FontImage from '../dist/assets/Roboto-msdf.png';
 
 
 
-let scene, camera, renderer, controls; 
+let scene, camera, renderer, controls, vrControl; 
 let meshContainer, meshes, currentMesh;
 const objsToTest = [];
 
@@ -116,6 +118,25 @@ function init() {
     scene.add(light, hemLight);
 
 
+
+    
+
+    vrControl = VRControl(renderer, camera, scene);
+
+    scene.add(vrControl.controllerGrips[0], vrControl.controllers[0]);
+
+    vrControl.controllers[0].addEventListener('selectstart', () => {
+
+        selectState = true;
+
+    });
+    vrControl.controllers[0].addEventListener('selectend', () => {
+
+        selectState = false;
+
+    });
+
+
     
 
     ////////////////////
@@ -153,6 +174,8 @@ function init() {
     currentMesh = 0;
 
     showMesh(currentMesh);
+
+    
 
     //////////
     // Panel
