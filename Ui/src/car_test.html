@@ -111,8 +111,7 @@
       visible="false"></a-plane>
      
   </a-scene>
-  </div>
-  <script>
+  <!-- <script>
     function setSize(scale) {
       document
         .getElementById("container")
@@ -122,6 +121,15 @@
     document.getElementById("btn_half").onclick = setSize.bind(this, 0.5);
     document.getElementById("btn_quarter").onclick = setSize.bind(this, 0.25);
     document.getElementById('btn_tenth').onclick = setSize.bind(this, 0.1);
+
+  </script> -->
+  <script>
+    function setSize(scale) {
+      document
+        .getElementById("container")
+        .setAttribute("scale", { x: scale, y: scale, z: scale });
+    }
+    setSize.bind(this, 0.5);
 
   </script>
   
