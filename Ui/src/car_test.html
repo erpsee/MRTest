@@ -226,33 +226,14 @@
         document.getElementById('rightController').setAttribute('car-controls', '');
 
     </script>
-    <script>
+      <script>
         // Automatischer AR-Start beim Laden der Seite (nicht empfohlen)
-        window.addEventListener('load', async () => {
+        window.addEventListener('load', () => {
+            console.log("car_test.html geladen");
             const urlParams = new URLSearchParams(window.location.search);
             const mode = urlParams.get('mode');
-
+          
             console.log("Mode Parameter:", mode);
-
-            if (mode === 'ar' && navigator.xr) {
-                console.log("Versuche AR-Modus zu starten...");
-                try {
-                    const session = await navigator.xr.requestSession('immersive-ar', {
-                        optionalFeatures: ['local-floor', 'bounded-floor', 'dom-overlay', 'hit-test'], // hit-test hinzugefügt!
-                        domOverlay: { root: document.body },
-                    });
-                    const sceneEl = document.querySelector('a-scene');
-                    sceneEl.xrSession = session;
-                    console.log("AR-Session erfolgreich gestartet.");
-                    session.requestAnimationFrame(() => {
-                        console.log("Erster Frame der Sitzung angefordert.");
-                    });
-                } catch (error) {
-                    console.error("AR-Session konnte nicht gestartet werden:", error);
-                }
-            } else {
-                console.log("WebXR wird nicht oder AR-Modus wurde nicht angefordert.");
-            }
         });
     </script>
 </body>
