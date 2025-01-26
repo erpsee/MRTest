@@ -488,7 +488,7 @@ function zeigeIframeAlt() {
 	console.log('ar');
 	
 	if(mode === "ar")
-		window.location.href = "https://erpsee.github.io/MRTest/Ui/src/car_test.html?mode=ar";
+		window.location.href = "https://erpsee.github.io/MRTest/Ui/src/car_test.html";
 	else
 		window.location.href = "https://erpsee.github.io/MRTest/Ui/src/car_test.html?mode=ar";
 }

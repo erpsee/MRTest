@@ -69,7 +69,7 @@
 </head>
 
 <body>
-  <a-scene xr-mode-ui="enabled: true; XRMode: xr;">
+  <a-scene xr-mode-ui="enabled: true; XRMode: xr;" embedded arjs>
     <a-assets timeout="30000">
       <img id="racetrack_large" src="Large.png">
       <img id="racetrack_middle" src="Middle.png">
@@ -112,19 +112,26 @@
      
   </a-scene>
   <script>
-    // Automatischer AR-Start
-    window.addEventListener('load', () => {
+    // Automatischer AR-Start beim Laden der Seite
+    window.addEventListener('load', async () => {
       if (navigator.xr) {
-        navigator.xr.requestSession('immersive-ar')
-          .then(session => {
-            console.log("AR Session gestartet!");
-            // Weitere Konfigurationen hier
-          })
+        try {
+          const session = await navigator.xr.requestSession('immersive-ar', {
+            optionalFeatures: ['local-floor', 'bounded-floor', 'dom-overlay'],
+            domOverlay: { root: document.body },
+          });
+          const sceneEl = document.querySelector('a-scene');
+          sceneEl.xrSession = session;
+          console.log("AR-Session erfolgreich gestartet.");
+        } catch (error) {
+          console.error("AR-Session konnte nicht gestartet werden:", error);
+        }
       } else {
-        console.error("WebXR nicht unterstützt.");
+        console.error("WebXR wird von diesem Gerät oder Browser nicht unterstützt.");
       }
     });
   </script>
+  
   <!-- <script>
     function setSize(scale) {
       document
