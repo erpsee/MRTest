@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
+
 import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
@@ -9,7 +9,7 @@ import ShadowedLight from '../utils/ShadowedLight.js';
 
 import FontJSON from '../dist/assets/Roboto-msdf.json';
 import FontImage from '../dist/assets/Roboto-msdf.png';
-import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
+
 
 
 let scene, camera, renderer, controls, vrControl;
@@ -77,16 +77,6 @@ function init() {
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.xr.enabled = true;
 
-    const vrButton = VRButton.createButton(renderer);
-    vrButton.style.bottom = '70px';
-    vrButton.style.zIndex = '10';
-    document.body.appendChild(vrButton);
-
-    // AR-Button hinzufügen
-    const arButton = ARButton.createButton(renderer);
-    arButton.style.zIndex = '10';
-    document.body.appendChild(arButton);
-
     document.body.appendChild(renderer.domElement);
 
     // Orbit controls for no-vr
@@ -110,19 +100,6 @@ function init() {
 
     scene.add(room);
     objsToTest.push(roomMesh);
-
-
-    arButton.addEventListener('click', () => {
-        console.log('AR-Button gedrückt');
-        mode = "ar";
-
-        if (scene.children.includes(room)) {
-            scene.remove(room);
-            scene.background = null;
-            console.log('room wurde entfernt');
-        }
-
-    })
 
     //////////
     // Light
