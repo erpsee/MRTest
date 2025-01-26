@@ -238,7 +238,7 @@
                 console.log("Versuche AR-Modus zu starten...");
                 try {
                     const session = await navigator.xr.requestSession('immersive-ar', {
-                        optionalFeatures: ['local-floor', 'bounded-floor', 'dom-overlay'],
+                        optionalFeatures: ['local-floor', 'bounded-floor', 'dom-overlay', 'hit-test'], // hit-test hinzugefügt!
                         domOverlay: { root: document.body },
                     });
                     const sceneEl = document.querySelector('a-scene');
