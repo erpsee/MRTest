@@ -4,19 +4,19 @@ import { BoxLineGeometry } from 'three/examples/jsm/geometries/BoxLineGeometry.j
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import ThreeMeshUI from 'three-mesh-ui';
-import VRControl from '../utils/VRControl.js';
-import ShadowedLight from '../utils/ShadowedLight.js';
 
+import ShadowedLight from '../utils/ShadowedLight.js';
 import FontJSON from '../dist/assets/Roboto-msdf.json';
 import FontImage from '../dist/assets/Roboto-msdf.png';
 
 
 
-let scene, camera, renderer, controls, vrControl;
+
+let scene, camera, renderer, controls; 
 let meshContainer, meshes, currentMesh;
 const objsToTest = [];
 
-let mode = "vr";
+
 
 window.addEventListener('load', init);
 window.addEventListener('resize', onWindowResize);
@@ -115,25 +115,8 @@ function init() {
 
     scene.add(light, hemLight);
 
-    ////////////////
-    // Controllers
-    ////////////////
 
-
-    vrControl = VRControl(renderer, camera, scene);
-
-    scene.add(vrControl.controllerGrips[0], vrControl.controllers[0]);
-
-    vrControl.controllers[0].addEventListener('selectstart', () => {
-
-        selectState = true;
-
-    });
-    vrControl.controllers[0].addEventListener('selectend', () => {
-
-        selectState = false;
-
-    });
+    
 
     ////////////////////
     // Primitive Meshes
@@ -261,7 +244,7 @@ function makePanel() {
     textBlock.add(text)
 
     const instructionsText = new ThreeMeshUI.Text({
-        content: 'Please select "AR" or "VR" to start',
+        content: 'Please select a Racetrack, you want to drive on',
         textAlign: 'center',
         fontSize: 0.05,
     })
@@ -454,10 +437,7 @@ function updateButtons() {
 function zeigeIframeAlt() {
     console.log('ar');
     let targetURL = "https://erpsee.github.io/MRTest/Ui/src/car_test.html";
-    
-    if (mode === "ar") {
         targetURL += "?mode=ar";
-    }
     window.location.href = targetURL;
 }
 
