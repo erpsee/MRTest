@@ -10,14 +10,16 @@ import VRControl from '../utils/VRControl.js';
 import ShadowedLight from '../utils/ShadowedLight.js';
 import FontJSON from '../dist/assets/Roboto-msdf.json';
 import FontImage from '../dist/assets/Roboto-msdf.png';
-
+import Largemap from '../src/Large.png';
+import Middlemap from '../src/Middle.png';
+import Smallmap from '../src/Small.png';
 
 
 
 let scene, camera, renderer, controls, vrControl; 
 let meshContainer, meshes, currentMesh;
 const objsToTest = [];
-
+let mode = "L";
 
 
 window.addEventListener('load', init);
@@ -149,28 +151,42 @@ function init() {
 
     //
 
-    const sphere = new THREE.Mesh(
-        new THREE.IcosahedronBufferGeometry(0.3, 1),
-        new THREE.MeshStandardMaterial({ color: 0x3de364, flatShading: true })
-    );
+    
+    const LargeimageBlock = new ThreeMeshUI.Block({
+        height: 1,
+        width: 1,
+      });
 
-    const box = new THREE.Mesh(
-        new THREE.BoxBufferGeometry(0.45, 0.45, 0.45),
-        new THREE.MeshStandardMaterial({ color: 0x643de3, flatShading: true })
-    );
+    const loader = new THREE.TextureLoader();
 
-    const cone = new THREE.Mesh(
-        new THREE.ConeBufferGeometry(0.28, 0.5, 10),
-        new THREE.MeshStandardMaterial({ color: 0xe33d4e, flatShading: true })
-    );
+    loader.load(Largemap, (texture) => {
+    LargeimageBlock.set({ backgroundTexture: texture });
+  });
+    
 
-    //
+    const MedeumimageBlock = new ThreeMeshUI.Block({
+        height: 6/7, // 6/7 ist dase Verhältnis von Medium zu Large
+        width: 6/7,
+      });
 
-    sphere.visible = box.visible = cone.visible = false;
+    loader.load(Middlemap, (texture) => {
+    MedeumimageBlock.set({ backgroundTexture: texture });
+  });
 
-    meshContainer.add(sphere, box, cone);
+    const SmallimageBlock = new ThreeMeshUI.Block({
+        height: 5/7, // 6/7 ist dase Verhältnis von Large zu Small
+        width: 5/7,
+      });
 
-    meshes = [sphere, box, cone];
+    loader.load(Smallmap, (texture) => {
+    SmallimageBlock.set({ backgroundTexture: texture });
+  });
+
+    LargeimageBlock.visible = MedeumimageBlock.visible = SmallimageBlock.visible = false;
+
+    meshContainer.add(LargeimageBlock, MedeumimageBlock, SmallimageBlock);
+
+    meshes = [LargeimageBlock, MedeumimageBlock, SmallimageBlock];
     currentMesh = 0;
 
     showMesh(currentMesh);
@@ -225,6 +241,17 @@ function makePanel() {
     container.position.set(0, 0.6, -1.2);
     container.rotation.x = -0.55;
     scene.add(container);
+
+    const ImageContainer = new ThreeMeshUI.Block({
+        justifyContent: 'center',
+        contentDirection: 'column',
+        fontFamily: FontJSON,
+        fontTexture: FontImage,
+        fontSize: 0.07,
+        padding: 0.02,
+        borderRadius: 0.031,
+        //backgroundOpacity: 0
+    });
 
     const textBlock = new ThreeMeshUI.Block({
         height: 0.1,
@@ -321,6 +348,7 @@ function makePanel() {
 
     const buttonNext = new ThreeMeshUI.Block(buttonOptions);
     const buttonPrevious = new ThreeMeshUI.Block(buttonOptions);
+    const buttonStart = new ThreeMeshUI.Block(buttonOptions);
 
     // Add text to buttons
 
@@ -329,7 +357,11 @@ function makePanel() {
     );
 
     buttonPrevious.add(
-        new ThreeMeshUI.Text({ content: 'previous' })
+        new ThreeMeshUI.Text({ content: "previous" })
+    );
+
+    buttonStart.add(
+        new ThreeMeshUI.Text({ content: 'start' })
     );
 
     // Create states for the buttons.
@@ -345,9 +377,11 @@ function makePanel() {
         state: 'selected',
         attributes: selectedAttributes,
         onSet: () => {
-            selectedObject = buttonNext;
-            zeigeIframeAlt();
-
+        selectedObject = buttonNext
+        currentMesh += 1;
+        if (currentMesh > 2) currentMesh = 0;
+        showMesh(currentMesh);
+        
         }
     });
     buttonNext.setupState(hoveredStateAttributes);
@@ -369,9 +403,20 @@ function makePanel() {
     buttonPrevious.setupState(hoveredStateAttributes);
     buttonPrevious.setupState(idleStateAttributes);
 
+    buttonStart.setupState({
+        state: 'selected',
+        attributes: selectedAttributes,
+        onSet: () => {
+            selectedObject = buttonStart
+            zeigeIframeAlt();
+        }
+    });
+    buttonStart.setupState(hoveredStateAttributes);
+    buttonStart.setupState(idleStateAttributes);
+
     // Add buttons to the container
-    container.add(buttonNext, buttonPrevious);
-    objsToTest.push(buttonNext, buttonPrevious);
+    container.add(buttonStart, buttonNext, buttonPrevious);
+    objsToTest.push(buttonStart, buttonNext, buttonPrevious);
 
 }
 
@@ -396,8 +441,7 @@ function loop() {
 
     controls.update();
 
-    meshContainer.rotation.z += 0.01;
-    meshContainer.rotation.y += 0.01;
+    meshContainer.rotation.z += 0.002;
 
     renderer.render(scene, camera);
 
@@ -458,9 +502,17 @@ function updateButtons() {
 
 
 function zeigeIframeAlt() {
-    console.log('ar');
+    
+
+    if (currentMesh == 1) {
+        mode = "M";
+    } else if (currentMesh == 2) {
+        mode = "S";
+    } else {
+        mode = "L"; //default 
+    }
     let targetURL = "https://erpsee.github.io/MRTest/Ui/src/car_test.html";
-        targetURL += "?mode=ar";
+        targetURL += "?mode=" + mode;
     window.location.href = targetURL;
 }
 

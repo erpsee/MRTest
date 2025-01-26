@@ -144,6 +144,25 @@
 
   </script>
   <script>
+        const params = new URLSearchParams(window.location.search);
+        const mode = params.get("mode");
+        if (mode === "M") {
+          document.getElementById("racetrack_m").setAttribute("visible", true);
+          document.getElementById("racetrack_l").setAttribute("visible", false);
+          document.getElementById("racetrack_s").setAttribute("visible", false);
+        } else if (mode === "S") {
+          document.getElementById("racetrack_m").setAttribute("visible", false);
+          document.getElementById("racetrack_l").setAttribute("visible", false);
+          document.getElementById("racetrack_s").setAttribute("visible", true);
+        } else if (mode === "L") {
+          document.getElementById("racetrack_m").setAttribute("visible", false);
+          document.getElementById("racetrack_l").setAttribute("visible", true);
+          document.getElementById("racetrack_s").setAttribute("visible", false);
+        } else {
+            
+        }
+  </script>
+  <script>
     <!-- https://github.com/stspanho/aframe-hit-test/blob/master/index.html -->
     AFRAME.registerComponent("ar-hit-test-simple", {
       init: function () {
