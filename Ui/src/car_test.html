@@ -113,6 +113,23 @@
       visible="false"></a-plane>
      
   </a-scene>
+  <script>
+    // Automatischer AR-Start
+    window.addEventListener('load', () => {
+      if (navigator.xr) {
+        navigator.xr.requestSession('immersive-ar')
+          .then(session => {
+            console.log("AR Session gestartet!");
+            // Weitere Konfigurationen hier
+          })
+          .catch(err => {
+            console.error("AR-Modus konnte nicht gestartet werden:", err);
+          });
+      } else {
+        console.error("WebXR nicht unterstützt.");
+      }
+    });
+  </script>
   <!-- <script>
     function setSize(scale) {
       document
